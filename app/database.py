@@ -21,7 +21,11 @@ class Base(DeclarativeBase):
     pass
 
 # Factory for creating new SQLAlchemy sessions
-SessionLocal = sessionmaker(bind=engine)
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+)
 
 
 
