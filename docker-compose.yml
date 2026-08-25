@@ -1,0 +1,26 @@
+services:
+
+  db:
+    image: postgres:16
+    container_name: employee-db
+    environment:
+      POSTGRES_DB: employee_db
+      POSTGRES_USER: employee_user
+      POSTGRES_PASSWORD: employee_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: employee-api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg://employee_user:employee_password@db:5432/employee_db
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
